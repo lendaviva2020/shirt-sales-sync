@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      vendas: {
+        Row: {
+          data_hora: string
+          forma_pagamento: string | null
+          genero: string
+          id: string
+          nome_cliente: string
+          observacao: string | null
+          pago: boolean
+          quantidade: number
+          tamanho: string
+          valor_total: number | null
+          valor_unitario: number
+        }
+        Insert: {
+          data_hora?: string
+          forma_pagamento?: string | null
+          genero: string
+          id?: string
+          nome_cliente: string
+          observacao?: string | null
+          pago?: boolean
+          quantidade: number
+          tamanho: string
+          valor_total?: number | null
+          valor_unitario: number
+        }
+        Update: {
+          data_hora?: string
+          forma_pagamento?: string | null
+          genero?: string
+          id?: string
+          nome_cliente?: string
+          observacao?: string | null
+          pago?: boolean
+          quantidade?: number
+          tamanho?: string
+          valor_total?: number | null
+          valor_unitario?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
