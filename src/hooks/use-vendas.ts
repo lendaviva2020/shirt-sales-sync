@@ -39,7 +39,7 @@ export function useSalvarVenda() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, values }: { id?: string; values: VendaInsert }) => {
+    mutationFn: async ({ id, values }: { id?: string | undefined; values: VendaInsert }) => {
       if (id) {
         const { error } = await supabase.from("vendas").update(values).eq("id", id);
         if (error) throw error;

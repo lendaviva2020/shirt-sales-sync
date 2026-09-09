@@ -82,11 +82,14 @@ export function ResumoPanel({ resumo }: ResumoPanelProps) {
         <div className="tile p-3">
           <div className="text-[10px] uppercase tracking-[0.16em] text-faint">Gênero</div>
           <div className="mt-1 text-sm">
-            <span className="font-display font-semibold">M {resumo.porGenero.Masculino ?? 0}</span>
+            <span className="font-display font-semibold">
+              M {resumo.porGenero["Masculino"] ?? 0}
+            </span>
             <span className="text-faint"> · </span>
             <span className="font-display font-semibold text-accent2">
-              F {resumo.porGenero.Feminino ?? 0}
+              F {resumo.porGenero["Feminino"] ?? 0}
             </span>
+
           </div>
         </div>
         <div className="tile p-3">
