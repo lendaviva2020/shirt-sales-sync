@@ -5,7 +5,9 @@ import { EstoquePainel } from "@/components/vendas/estoque-painel";
 import { ResumoPanel } from "@/components/vendas/resumo-panel";
 import { VendaCard } from "@/components/vendas/venda-card";
 import { VendaForm } from "@/components/vendas/venda-form";
+import { useEstoque } from "@/hooks/use-estoque";
 import { useExcluirVenda, useVendas } from "@/hooks/use-vendas";
+import { exportarPlanilha } from "@/lib/exportar-planilha";
 import {
   FORMAS_PAGAMENTO,
   GENEROS,
@@ -39,6 +41,7 @@ type FiltroPagamento = "todos" | "pagos" | "pendentes";
 
 function Index() {
   const { data: vendas = [], isLoading } = useVendas();
+  const { data: estoque = [] } = useEstoque();
   const excluir = useExcluirVenda();
 
   const [busca, setBusca] = useState("");
