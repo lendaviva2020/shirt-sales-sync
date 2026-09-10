@@ -83,7 +83,9 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
         observacao: vendaEmEdicao.observacao ?? "",
       });
     } else {
-      setForm(estadoInicial);
+      const ultimoValor =
+        typeof window === "undefined" ? "" : (localStorage.getItem(VALOR_PADRAO_KEY) ?? "");
+      setForm({ ...estadoInicial, valor_unitario: ultimoValor });
     }
   }, [aberto, vendaEmEdicao]);
 
