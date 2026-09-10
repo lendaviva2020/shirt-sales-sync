@@ -89,6 +89,8 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
 
   if (!aberto) return null;
 
+  const tamanhosDisponiveis: readonly string[] = TAMANHOS_POR_GENERO[form.genero] ?? TAMANHOS;
+
   const totalPrevisto =
     (Number(form.quantidade) || 0) * (Number(form.valor_unitario.replace(",", ".")) || 0);
 
