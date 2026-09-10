@@ -170,7 +170,13 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
                 <button
                   key={genero}
                   type="button"
-                  onClick={() => setForm({ ...form, genero })}
+                  onClick={() =>
+                    setForm({
+                      ...form,
+                      genero,
+                      tamanho: form.genero === genero ? form.tamanho : "",
+                    })
+                  }
                   className={`tile py-2.5 text-sm font-medium ${
                     form.genero === genero ? "text-accent2" : "text-faint"
                   }`}
@@ -183,8 +189,8 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
 
           <div>
             <span className="text-[11px] uppercase tracking-[0.16em] text-faint">Tamanho</span>
-            <div className="mt-1 grid grid-cols-6 gap-1.5">
-              {TAMANHOS.map((tamanho) => (
+            <div className="mt-1 grid grid-cols-4 gap-1.5">
+              {tamanhosDisponiveis.map((tamanho) => (
                 <button
                   key={tamanho}
                   type="button"
