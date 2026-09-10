@@ -57,6 +57,8 @@ const estadoInicial: FormState = {
   observacao: "",
 };
 
+const VALOR_PADRAO_KEY = "valor_unitario_padrao";
+
 interface VendaFormProps {
   aberto: boolean;
   vendaEmEdicao: Venda | null;
