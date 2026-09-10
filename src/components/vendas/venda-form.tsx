@@ -116,8 +116,16 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
       await salvar.mutateAsync({ id: vendaEmEdicao?.id, values });
       toast.success(vendaEmEdicao ? "Venda atualizada" : "Venda registrada");
       onFechar();
-    } catch {
-      setErro("Não foi possível salvar. Verifique a conexão e tente de novo.");
+    } catch (error) {
+      const bruta =
+        error && typeof error === "object" && "message" in error
+          ? String((error as { message: unknown }).message ?? "")
+          : "";
+      const mensagem = bruta.includes("Estoque insuficiente")
+        ? bruta.replace(/^.*?(Estoque insuficiente)/s, "$1")
+        : "Não foi possível salvar. Verifique a conexão e tente de novo.";
+      setErro(mensagem);
+      toast.error(mensagem);
     }
   };
 
