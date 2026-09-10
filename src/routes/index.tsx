@@ -105,6 +105,25 @@ function Index() {
 
         <ResumoPanel resumo={resumo} />
 
+        <div className="mt-5 grid grid-cols-2 gap-1.5 rounded-2xl border border-line bg-glass2 p-1">
+          {(["vendas", "estoque"] as const).map((opcao) => (
+            <button
+              key={opcao}
+              type="button"
+              onClick={() => setAba(opcao)}
+              className={`rounded-xl py-2 text-sm font-semibold capitalize ${
+                aba === opcao ? "bg-accent2/15 text-accent2" : "text-faint"
+              }`}
+            >
+              {opcao}
+            </button>
+          ))}
+        </div>
+
+        {aba === "vendas" ? (
+          <>
+
+
         <div className="mb-3 mt-5 flex items-center gap-2">
           <input
             className="field flex-1"
