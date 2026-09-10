@@ -224,9 +224,18 @@ function Index() {
 
           <button
             type="button"
+            onClick={() => exportarPlanilha(vendas, estoque)}
+            disabled={vendas.length === 0 && estoque.length === 0}
+            className="mt-1 w-full rounded-2xl bg-accent2/15 py-3 text-sm font-semibold text-accent2 disabled:opacity-50"
+          >
+            Exportar planilha (Excel)
+          </button>
+
+          <button
+            type="button"
             onClick={() => exportarCsv(vendasFiltradas)}
             disabled={vendasFiltradas.length === 0}
-            className="mt-1 w-full rounded-2xl border border-line bg-glass2 py-3 text-sm font-medium text-accent2 disabled:opacity-50"
+            className="w-full rounded-2xl border border-line bg-glass2 py-3 text-sm font-medium text-faint disabled:opacity-50"
           >
             Exportar CSV (backup)
           </button>
