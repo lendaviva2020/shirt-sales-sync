@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      estoque: {
+        Row: {
+          genero: string
+          id: string
+          quantidade_inicial: number
+          tamanho: string
+        }
+        Insert: {
+          genero: string
+          id?: string
+          quantidade_inicial?: number
+          tamanho: string
+        }
+        Update: {
+          genero?: string
+          id?: string
+          quantidade_inicial?: number
+          tamanho?: string
+        }
+        Relationships: []
+      }
       vendas: {
         Row: {
           data_hora: string
@@ -58,7 +79,17 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      estoque_status: {
+        Row: {
+          genero: string | null
+          id: string | null
+          quantidade_inicial: number | null
+          restante: number | null
+          tamanho: string | null
+          vendido: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
