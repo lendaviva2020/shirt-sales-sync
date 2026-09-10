@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { EstoquePainel } from "@/components/vendas/estoque-painel";
 import { ResumoPanel } from "@/components/vendas/resumo-panel";
 import { VendaCard } from "@/components/vendas/venda-card";
 import { VendaForm } from "@/components/vendas/venda-form";
@@ -48,6 +49,7 @@ function Index() {
   const [filtroForma, setFiltroForma] = useState<string>("");
   const [formAberto, setFormAberto] = useState(false);
   const [vendaEmEdicao, setVendaEmEdicao] = useState<Venda | null>(null);
+  const [aba, setAba] = useState<"vendas" | "estoque">("vendas");
 
   const resumo = useMemo(() => calcularResumo(vendas), [vendas]);
 
