@@ -87,7 +87,7 @@ export function ResumoPanel({ resumo }: ResumoPanelProps) {
             </span>
             <span className="text-faint"> · </span>
             <span className="font-display font-semibold text-accent2">
-              F {resumo.porGenero["Feminino"] ?? 0}
+              BL {resumo.porGenero["Baby Look"] ?? 0}
             </span>
 
           </div>

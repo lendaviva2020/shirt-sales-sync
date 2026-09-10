@@ -6,6 +6,7 @@ import {
   FORMAS_PAGAMENTO,
   GENEROS,
   TAMANHOS,
+  TAMANHOS_POR_GENERO,
   formatBRL,
   type Venda,
   type VendaInsert,
@@ -47,7 +48,7 @@ interface FormState {
 
 const estadoInicial: FormState = {
   nome_cliente: "",
-  genero: "Feminino",
+  genero: "Baby Look",
   tamanho: "M",
   quantidade: "1",
   valor_unitario: "",
@@ -88,6 +89,8 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
 
   if (!aberto) return null;
 
+  const tamanhosDisponiveis: readonly string[] = TAMANHOS_POR_GENERO[form.genero] ?? TAMANHOS;
+
   const totalPrevisto =
     (Number(form.quantidade) || 0) * (Number(form.valor_unitario.replace(",", ".")) || 0);
 
@@ -115,8 +118,16 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
       await salvar.mutateAsync({ id: vendaEmEdicao?.id, values });
       toast.success(vendaEmEdicao ? "Venda atualizada" : "Venda registrada");
       onFechar();
-    } catch {
-      setErro("Não foi possível salvar. Verifique a conexão e tente de novo.");
+    } catch (error) {
+      const bruta =
+        error && typeof error === "object" && "message" in error
+          ? String((error as { message: unknown }).message ?? "")
+          : "";
+      const mensagem = bruta.includes("Estoque insuficiente")
+        ? bruta.replace(/^.*?(Estoque insuficiente)/s, "$1")
+        : "Não foi possível salvar. Verifique a conexão e tente de novo.";
+      setErro(mensagem);
+      toast.error(mensagem);
     }
   };
 
@@ -161,7 +172,13 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
                 <button
                   key={genero}
                   type="button"
-                  onClick={() => setForm({ ...form, genero })}
+                  onClick={() =>
+                    setForm({
+                      ...form,
+                      genero,
+                      tamanho: form.genero === genero ? form.tamanho : "",
+                    })
+                  }
                   className={`tile py-2.5 text-sm font-medium ${
                     form.genero === genero ? "text-accent2" : "text-faint"
                   }`}
@@ -174,8 +191,8 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
 
           <div>
             <span className="text-[11px] uppercase tracking-[0.16em] text-faint">Tamanho</span>
-            <div className="mt-1 grid grid-cols-6 gap-1.5">
-              {TAMANHOS.map((tamanho) => (
+            <div className="mt-1 grid grid-cols-4 gap-1.5">
+              {tamanhosDisponiveis.map((tamanho) => (
                 <button
                   key={tamanho}
                   type="button"

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { EstoquePainel } from "@/components/vendas/estoque-painel";
 import { ResumoPanel } from "@/components/vendas/resumo-panel";
 import { VendaCard } from "@/components/vendas/venda-card";
 import { VendaForm } from "@/components/vendas/venda-form";
@@ -48,6 +49,7 @@ function Index() {
   const [filtroForma, setFiltroForma] = useState<string>("");
   const [formAberto, setFormAberto] = useState(false);
   const [vendaEmEdicao, setVendaEmEdicao] = useState<Venda | null>(null);
+  const [aba, setAba] = useState<"vendas" | "estoque">("vendas");
 
   const resumo = useMemo(() => calcularResumo(vendas), [vendas]);
 
@@ -102,6 +104,25 @@ function Index() {
         </header>
 
         <ResumoPanel resumo={resumo} />
+
+        <div className="mt-5 grid grid-cols-2 gap-1.5 rounded-2xl border border-line bg-glass2 p-1">
+          {(["vendas", "estoque"] as const).map((opcao) => (
+            <button
+              key={opcao}
+              type="button"
+              onClick={() => setAba(opcao)}
+              className={`rounded-xl py-2 text-sm font-semibold capitalize ${
+                aba === opcao ? "bg-accent2/15 text-accent2" : "text-faint"
+              }`}
+            >
+              {opcao}
+            </button>
+          ))}
+        </div>
+
+        {aba === "vendas" ? (
+          <>
+
 
         <div className="mb-3 mt-5 flex items-center gap-2">
           <input
@@ -210,18 +231,24 @@ function Index() {
             Exportar CSV (backup)
           </button>
         </section>
+          </>
+        ) : (
+          <EstoquePainel />
+        )}
       </div>
 
-      <div className="pointer-events-none fixed inset-x-0 bottom-6 flex justify-center">
-        <button
-          type="button"
-          onClick={abrirNova}
-          aria-label="Nova venda"
-          className="pointer-events-auto grid h-16 w-16 place-items-center rounded-full bg-accent2 font-display text-3xl font-semibold text-obsidian shadow-[0_12px_36px_-8px_rgba(165,180,252,0.6)]"
-        >
-          +
-        </button>
-      </div>
+      {aba === "vendas" ? (
+        <div className="pointer-events-none fixed inset-x-0 bottom-6 flex justify-center">
+          <button
+            type="button"
+            onClick={abrirNova}
+            aria-label="Nova venda"
+            className="pointer-events-auto grid h-16 w-16 place-items-center rounded-full bg-accent2 font-display text-3xl font-semibold text-obsidian shadow-[0_12px_36px_-8px_rgba(165,180,252,0.6)]"
+          >
+            +
+          </button>
+        </div>
+      ) : null}
 
       <VendaForm
         aberto={formAberto}
