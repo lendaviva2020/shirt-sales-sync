@@ -57,6 +57,8 @@ const estadoInicial: FormState = {
   observacao: "",
 };
 
+const VALOR_PADRAO_KEY = "valor_unitario_padrao";
+
 interface VendaFormProps {
   aberto: boolean;
   vendaEmEdicao: Venda | null;
@@ -83,7 +85,9 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
         observacao: vendaEmEdicao.observacao ?? "",
       });
     } else {
-      setForm(estadoInicial);
+      const ultimoValor =
+        typeof window === "undefined" ? "" : (localStorage.getItem(VALOR_PADRAO_KEY) ?? "");
+      setForm({ ...estadoInicial, valor_unitario: ultimoValor });
     }
   }, [aberto, vendaEmEdicao]);
 
@@ -116,6 +120,7 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
 
     try {
       await salvar.mutateAsync({ id: vendaEmEdicao?.id, values });
+      localStorage.setItem(VALOR_PADRAO_KEY, String(values.valor_unitario));
       toast.success(vendaEmEdicao ? "Venda atualizada" : "Venda registrada");
       onFechar();
     } catch (error) {

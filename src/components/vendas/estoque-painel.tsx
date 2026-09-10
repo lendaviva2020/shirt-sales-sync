@@ -57,8 +57,36 @@ export function EstoquePainel() {
     return <p className="py-8 text-center text-sm text-faint">Carregando estoque…</p>;
   }
 
+  const totalInicial = itens.reduce((s, i) => s + (i.quantidade_inicial ?? 0), 0);
+  const totalVendido = itens.reduce((s, i) => s + (i.vendido ?? 0), 0);
+  const totalRestante = itens.reduce((s, i) => s + (i.restante ?? 0), 0);
+  const percentual = totalInicial > 0 ? (totalVendido / totalInicial) * 100 : 0;
+
   return (
     <section className="space-y-2.5">
+      <div className="tile p-3">
+        <div className="grid grid-cols-3 gap-2 text-center">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.16em] text-faint">Total</div>
+            <div className="font-display text-lg font-semibold">{totalInicial}</div>
+          </div>
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.16em] text-faint">Vendido</div>
+            <div className="font-display text-lg font-semibold">{totalVendido}</div>
+          </div>
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.16em] text-faint">Restante</div>
+            <div className="font-display text-lg font-semibold text-accent2">{totalRestante}</div>
+          </div>
+        </div>
+        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-glass2">
+          <div className="h-full rounded-full bg-accent2" style={{ width: `${percentual}%` }} />
+        </div>
+        <p className="mt-2 text-center text-[11px] text-faint">
+          Progresso de vendas: {totalVendido} de {totalInicial} unidades ({percentual.toFixed(1)}%)
+        </p>
+      </div>
+
       {itens.map((item) => {
         const genero = item.genero ?? "";
         const tamanho = item.tamanho ?? "";

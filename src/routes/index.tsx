@@ -5,7 +5,9 @@ import { EstoquePainel } from "@/components/vendas/estoque-painel";
 import { ResumoPanel } from "@/components/vendas/resumo-panel";
 import { VendaCard } from "@/components/vendas/venda-card";
 import { VendaForm } from "@/components/vendas/venda-form";
+import { useEstoque } from "@/hooks/use-estoque";
 import { useExcluirVenda, useVendas } from "@/hooks/use-vendas";
+import { exportarPlanilha } from "@/lib/exportar-planilha";
 import {
   FORMAS_PAGAMENTO,
   GENEROS,
@@ -39,6 +41,7 @@ type FiltroPagamento = "todos" | "pagos" | "pendentes";
 
 function Index() {
   const { data: vendas = [], isLoading } = useVendas();
+  const { data: estoque = [] } = useEstoque();
   const excluir = useExcluirVenda();
 
   const [busca, setBusca] = useState("");
@@ -224,9 +227,18 @@ function Index() {
 
           <button
             type="button"
+            onClick={() => exportarPlanilha(vendas, estoque)}
+            disabled={vendas.length === 0 && estoque.length === 0}
+            className="mt-1 w-full rounded-2xl bg-accent2/15 py-3 text-sm font-semibold text-accent2 disabled:opacity-50"
+          >
+            Exportar planilha (Excel)
+          </button>
+
+          <button
+            type="button"
             onClick={() => exportarCsv(vendasFiltradas)}
             disabled={vendasFiltradas.length === 0}
-            className="mt-1 w-full rounded-2xl border border-line bg-glass2 py-3 text-sm font-medium text-accent2 disabled:opacity-50"
+            className="w-full rounded-2xl border border-line bg-glass2 py-3 text-sm font-medium text-faint disabled:opacity-50"
           >
             Exportar CSV (backup)
           </button>
