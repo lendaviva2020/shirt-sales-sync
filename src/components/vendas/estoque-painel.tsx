@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useAtualizarEstoqueInicial, useEstoque } from "@/hooks/use-estoque";
+import {
+  useAtualizarEstoqueInicial,
+  useEstoque,
+  type EstoqueStatus,
+} from "@/hooks/use-estoque";
 
 function statusDe(restante: number): { label: string; classe: string } {
   if (restante <= 0) return { label: "Esgotado", classe: "border-pending/40 bg-pending/15 text-pending" };
@@ -9,21 +13,26 @@ function statusDe(restante: number): { label: string; classe: string } {
   return { label: "OK", classe: "border-paid/40 bg-paid/15 text-paid" };
 }
 
+const VAZIO: EstoqueStatus[] = [];
+
 export function EstoquePainel() {
-  const { data: itens = [], isLoading } = useEstoque();
+  const { data, isLoading } = useEstoque();
+  const itens = data ?? VAZIO;
   const atualizar = useAtualizarEstoqueInicial();
   const [rascunho, setRascunho] = useState<Record<string, string>>({});
 
   useEffect(() => {
     setRascunho((atual) => {
+      let mudou = false;
       const proximo = { ...atual };
       for (const item of itens) {
         const chave = `${item.genero}|${item.tamanho}`;
         if (proximo[chave] === undefined) {
           proximo[chave] = String(item.quantidade_inicial ?? 0);
+          mudou = true;
         }
       }
-      return proximo;
+      return mudou ? proximo : atual;
     });
   }, [itens]);
 
