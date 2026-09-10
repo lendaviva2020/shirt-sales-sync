@@ -28,7 +28,7 @@ export function useEstoque() {
     };
 
     const channel = supabase
-      .channel("estoque-realtime")
+      .channel(`estoque-realtime-${Math.random().toString(36).slice(2)}`)
       .on("postgres_changes", { event: "*", schema: "public", table: "estoque" }, invalidar)
       .on("postgres_changes", { event: "*", schema: "public", table: "vendas" }, invalidar)
       .subscribe();
