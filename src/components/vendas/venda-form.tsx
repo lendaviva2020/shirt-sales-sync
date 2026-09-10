@@ -6,6 +6,7 @@ import {
   FORMAS_PAGAMENTO,
   GENEROS,
   TAMANHOS,
+  TAMANHOS_POR_GENERO,
   formatBRL,
   type Venda,
   type VendaInsert,
@@ -47,7 +48,7 @@ interface FormState {
 
 const estadoInicial: FormState = {
   nome_cliente: "",
-  genero: "Feminino",
+  genero: "Baby Look",
   tamanho: "M",
   quantidade: "1",
   valor_unitario: "",
