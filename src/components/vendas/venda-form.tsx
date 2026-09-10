@@ -120,6 +120,7 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
 
     try {
       await salvar.mutateAsync({ id: vendaEmEdicao?.id, values });
+      localStorage.setItem(VALOR_PADRAO_KEY, String(values.valor_unitario));
       toast.success(vendaEmEdicao ? "Venda atualizada" : "Venda registrada");
       onFechar();
     } catch (error) {
