@@ -212,18 +212,24 @@ function Index() {
             Exportar CSV (backup)
           </button>
         </section>
+          </>
+        ) : (
+          <EstoquePainel />
+        )}
       </div>
 
-      <div className="pointer-events-none fixed inset-x-0 bottom-6 flex justify-center">
-        <button
-          type="button"
-          onClick={abrirNova}
-          aria-label="Nova venda"
-          className="pointer-events-auto grid h-16 w-16 place-items-center rounded-full bg-accent2 font-display text-3xl font-semibold text-obsidian shadow-[0_12px_36px_-8px_rgba(165,180,252,0.6)]"
-        >
-          +
-        </button>
-      </div>
+      {aba === "vendas" ? (
+        <div className="pointer-events-none fixed inset-x-0 bottom-6 flex justify-center">
+          <button
+            type="button"
+            onClick={abrirNova}
+            aria-label="Nova venda"
+            className="pointer-events-auto grid h-16 w-16 place-items-center rounded-full bg-accent2 font-display text-3xl font-semibold text-obsidian shadow-[0_12px_36px_-8px_rgba(165,180,252,0.6)]"
+          >
+            +
+          </button>
+        </div>
+      ) : null}
 
       <VendaForm
         aberto={formAberto}
