@@ -3,11 +3,12 @@ import type { Database } from "@/integrations/supabase/types";
 export type Venda = Database["public"]["Tables"]["vendas"]["Row"];
 export type VendaInsert = Database["public"]["Tables"]["vendas"]["Insert"];
 
-export const GENEROS = ["Masculino", "Baby Look"] as const;
-export const TAMANHOS = ["P", "M", "G", "GG", "G1", "G2", "G3"] as const;
+export const GENEROS = ["Masculino", "Baby Look", "Infantil"] as const;
+export const TAMANHOS = ["P", "M", "G", "GG", "G1", "G2", "G3", "6", "8", "10", "14"] as const;
 export const TAMANHOS_POR_GENERO: Record<string, readonly string[]> = {
   Masculino: ["P", "M", "G", "GG", "G1", "G2", "G3"],
   "Baby Look": ["P", "M", "G", "GG"],
+  Infantil: ["6", "8", "10", "14"],
 };
 export const FORMAS_PAGAMENTO = [
   "Dinheiro",
@@ -42,7 +43,7 @@ export function calcularResumo(vendas: Venda[]): Resumo {
     pecas: 0,
     clientes: 0,
     porTamanho: Object.fromEntries(TAMANHOS.map((t) => [t, 0])),
-    porGenero: { Masculino: 0, "Baby Look": 0 },
+    porGenero: { Masculino: 0, "Baby Look": 0, Infantil: 0 },
     porPagamento: Object.fromEntries(FORMAS_PAGAMENTO.map((f) => [f, 0])),
   };
 
