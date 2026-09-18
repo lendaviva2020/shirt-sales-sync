@@ -33,6 +33,10 @@ const vendaSchema = z
   .refine((data) => !data.pago || data.forma_pagamento !== null, {
     message: "Escolha a forma de pagamento",
     path: ["forma_pagamento"],
+  })
+  .refine((data) => (TAMANHOS_POR_GENERO[data.genero] ?? []).includes(data.tamanho), {
+    message: "Esse tamanho não existe para o gênero escolhido",
+    path: ["tamanho"],
   });
 
 interface FormState {
@@ -172,7 +176,7 @@ export function VendaForm({ aberto, vendaEmEdicao, onFechar }: VendaFormProps) {
 
           <div>
             <span className="text-[11px] uppercase tracking-[0.16em] text-faint">Gênero</span>
-            <div className="mt-1 grid grid-cols-2 gap-2">
+            <div className="mt-1 grid grid-cols-3 gap-2">
               {GENEROS.map((genero) => (
                 <button
                   key={genero}
