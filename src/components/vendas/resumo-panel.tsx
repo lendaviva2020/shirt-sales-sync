@@ -60,7 +60,7 @@ export function ResumoPanel({ resumo }: ResumoPanelProps) {
         <div className="mb-2 text-[10px] uppercase tracking-[0.18em] text-faint">
           Peças por tamanho
         </div>
-        <div className="grid grid-cols-6 gap-1.5">
+        <div className="grid grid-cols-4 gap-1.5">
           {TAMANHOS.map((tamanho) => {
             const valor = resumo.porTamanho[tamanho] ?? 0;
             const destaque = valor > 0 && valor === maxTamanho;
@@ -81,15 +81,25 @@ export function ResumoPanel({ resumo }: ResumoPanelProps) {
       <div className="mt-3 grid grid-cols-2 gap-2.5">
         <div className="tile p-3">
           <div className="text-[10px] uppercase tracking-[0.16em] text-faint">Gênero</div>
-          <div className="mt-1 text-sm">
-            <span className="font-display font-semibold">
-              M {resumo.porGenero["Masculino"] ?? 0}
-            </span>
-            <span className="text-faint"> · </span>
-            <span className="font-display font-semibold text-accent2">
-              BL {resumo.porGenero["Baby Look"] ?? 0}
-            </span>
-
+          <div className="mt-1.5 grid grid-cols-3 gap-1 text-center">
+            <div>
+              <div className="font-display text-sm font-semibold text-luminous">
+                {resumo.porGenero["Masculino"] ?? 0}
+              </div>
+              <div className="text-[9px] text-faint">Masc.</div>
+            </div>
+            <div>
+              <div className="font-display text-sm font-semibold text-accent2">
+                {resumo.porGenero["Baby Look"] ?? 0}
+              </div>
+              <div className="text-[9px] text-faint">Baby Look</div>
+            </div>
+            <div>
+              <div className="font-display text-sm font-semibold text-luminous">
+                {resumo.porGenero["Infantil"] ?? 0}
+              </div>
+              <div className="text-[9px] text-faint">Infantil</div>
+            </div>
           </div>
         </div>
         <div className="tile p-3">
