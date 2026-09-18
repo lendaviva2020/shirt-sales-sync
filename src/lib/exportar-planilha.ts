@@ -118,6 +118,7 @@ function abaResumo(vendas: Venda[]): XLSX.WorkSheet {
   linhas.push(["Por gênero", "Peças vendidas"]);
   linhas.push(["Masculino", resumo.porGenero["Masculino"] ?? 0]);
   linhas.push(["Baby Look", resumo.porGenero["Baby Look"] ?? 0]);
+  linhas.push(["Infantil", resumo.porGenero["Infantil"] ?? 0]);
   linhas.push([]);
   linhas.push(["Recebido por forma de pagamento", "Valor (R$)"]);
   for (const forma of FORMAS_PAGAMENTO) {
