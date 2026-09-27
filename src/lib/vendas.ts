@@ -8,7 +8,7 @@ export const TAMANHOS = ["P", "M", "G", "GG", "G1", "G2", "G3", "6", "8", "10", 
 export const TAMANHOS_POR_GENERO: Record<string, readonly string[]> = {
   Masculino: ["P", "M", "G", "GG", "G1", "G2", "G3"],
   "Baby Look": ["P", "M", "G", "GG"],
-  Infantil: ["6", "8", "10", "14"],
+  Infantil: ["6", "8", "10", "14", "12"],
 };
 export const FORMAS_PAGAMENTO = [
   "Dinheiro",
